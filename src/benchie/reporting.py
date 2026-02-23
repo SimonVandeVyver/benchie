@@ -129,7 +129,7 @@ def create_table(with_imports, with_tracker, timings=None):
         header.append("Rank")
         output.append(d + d.join(header) + d)
         output.append(d + d.join([":---", *["---:" for _ in range(len(header) - 1)]]) + d)
-        d_relative = make_relative(with_imports or with_tracker)
+        # d_relative = make_relative(with_imports or with_tracker)
         for c in timings["results"]:
             name = c["command"]
             columns = [
@@ -148,7 +148,7 @@ def create_table(with_imports, with_tracker, timings=None):
                 columns.append(with_imports[name])
             if with_tracker:
                 columns.append(with_tracker[name])
-            columns.append(str(d_relative[name]))
+            # columns.append(str(d_relative[name]))
             output.append(d + d.join(columns) + d)
     return "\n".join(output)
 
