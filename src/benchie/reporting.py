@@ -107,7 +107,7 @@ def create_table(with_imports, with_tracker, timings=None):
             header.append("(with_imports) Peak memory")
         if with_tracker:
             header.append("(with_tracker) Median peak memory")
-        header.append("Rank")
+        # header.append("Rank")
         output.append(d + d.join(header) + d)
         output.append(d + d.join([":---", *["---:" for _ in range(len(header) - 1)]]) + d)
 
@@ -118,7 +118,7 @@ def create_table(with_imports, with_tracker, timings=None):
                 columns.append(with_imports[k])
             if with_tracker:
                 columns.append(with_tracker[k])
-            columns.append(str(relative_peaks[k]))
+            # columns.append(str(relative_peaks[k]))
             output.append(d + d.join([str(c) for c in columns]) + d)
     else:
         header = ["Command", "Mean [s]", "Min [s]", "Max [s]"]
@@ -126,7 +126,7 @@ def create_table(with_imports, with_tracker, timings=None):
             header.append("(with_imports) Peak memory")
         if with_tracker:
             header.append("(with_tracker) Median peak memory")
-        header.append("Rank")
+        # header.append("Rank")
         output.append(d + d.join(header) + d)
         output.append(d + d.join([":---", *["---:" for _ in range(len(header) - 1)]]) + d)
         # d_relative = make_relative(with_imports or with_tracker)
