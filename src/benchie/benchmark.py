@@ -60,7 +60,7 @@ def run_once(solution, testfile, timeout) -> None:
     logger.info(f"Command: {command}")
     # cmds = f"docker run -it --rm --mount type=bind,source={solution!s},destination=/submission,readonly local_combio_project"
     # logger.debug(f"Running command: {cmds}")
-    subprocess.run(
+    result = subprocess.run(
         [executable, "-c", command],
         # cmds,
         check=True,
@@ -68,6 +68,8 @@ def run_once(solution, testfile, timeout) -> None:
         env=env,
         # shell=True,
     )
+    if result.returncode != 0:
+        raise Exception("Student code failed")
 
 
 def run_once_docker(docker_image, solution, testfile, timeout) -> None:
