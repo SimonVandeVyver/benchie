@@ -76,7 +76,7 @@ def run_once_docker(docker_image, solution, testfile, timeout) -> None:
     logger.info(f"Command: {command}")
     cmds = f"docker run -t --rm --mount type=bind,source={solution!s},destination=/submission/{solution.name!s},readonly --entrypoint '/bin/bash' {docker_image} -c 'PYTHONPATH={src} uv run --frozen --no-sync python -c \"{command}\"'"
     logger.debug(f"Running command: {cmds}")
-    subprocess.run(
+    result = subprocess.run(
         # [executable, "-c", command],
         cmds,
         check=True,
@@ -84,6 +84,8 @@ def run_once_docker(docker_image, solution, testfile, timeout) -> None:
         # env=env,
         shell=True,
     )
+    if result.returncode != 0:
+        raise Exception("Student code failed")
 
 
 def _parse_dynamic_sampling_timer(timer: int, base_limit: int = 1, runtime_percentage=0.001) -> int:
@@ -170,6 +172,9 @@ def benchmark(
                 continue
             except subprocess.CalledProcessError as e:
                 logger.error(f"Error while testing '{solution.stem}'; {e}")
+                continue
+            except Exeption as e:
+                logger.error(f"Unexpected error while testing '{solution.stem}'; {e})
                 continue
             all_correct_solutions.append({"path": solution, "memory_interval_ms": memory_interval_ms})
         logger.info(f"Correct solutions: {len(all_correct_solutions)}")
