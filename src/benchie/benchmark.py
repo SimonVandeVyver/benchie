@@ -183,7 +183,7 @@ def benchmark(
         run_hyperfine_all(output, solution_paths, testfile, subset=subset, docker_image=docker_image)
 
     # prepare for memory profiling
-    n_memory_profiles = 3
+    n_memory_profiles = 1
 
     for solution in all_correct_solutions:
         path = solution["path"]
